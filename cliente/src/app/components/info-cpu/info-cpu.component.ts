@@ -46,12 +46,18 @@ export class InfoCpuComponent implements OnInit {
     setInterval(()=>{
       var time = new Date()
       this.lineChartData[0].data.push( this.ram.libre);
+      if (this.lineChartData[0].data.length >12){
+        this.lineChartData[0].data.shift()
+      }
       this.lineChartLabels.push(time.toLocaleString('en-US', { hour: 'numeric',minute:'numeric', second:'numeric',hour12: true }));
+      if (this.lineChartLabels.length >12){
+        this.lineChartLabels.shift()
+      }
       this.chart.chart.update();
       
       console.log('-------------TIEMPO---------')
       console.log( time.toLocaleString('en-US', { hour: 'numeric',minute:'numeric', second:'numeric',hour12: true }))
-    },3000)
+    },2000)
     console.log(this.lineChartData[0].data)
   }
 

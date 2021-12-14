@@ -1,4 +1,5 @@
 export interface ram{
     libre?: any,
-    total?: any
+    total?: any,
+    porcentaje?: any
 }

@@ -1,0 +1,12 @@
+.tabla{
+    position: absolute;
+    top: 40px;
+}
+
+.grafica{
+    position: absolute;
+    top: 250px;
+    left: 100px;
+    width: 1100px;
+    height: 800px;
+}

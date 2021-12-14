@@ -9,6 +9,8 @@ import { InfoRamComponent } from './components/info-ram/info-ram.component';
 import { PrincipalComponent } from './components/principal/principal.component';
 import { InfoCpuComponent } from './components/info-cpu/info-cpu.component';
 import { NgChartsModule } from 'ng2-charts';
+import { MatExpansionModule } from '@angular/material/expansion'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { NgChartsModule } from 'ng2-charts';
     BrowserModule,
     AppRoutingModule,
     NgChartsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatExpansionModule,
+    BrowserAnimationsModule
   ],
   providers: [PruebaService],
   bootstrap: [AppComponent]

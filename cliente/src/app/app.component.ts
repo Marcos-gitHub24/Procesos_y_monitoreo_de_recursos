@@ -12,8 +12,8 @@ export class AppComponent implements OnInit{
   ram:ram = {libre:'', total:''}
   otro:ram = {libre:'', total: ''}
 
-  public constructor(private socket: PruebaService){
-    this.ram = this.socket.getRam()
+  public constructor(){
+    
   }
 
   public ngOnInit(){

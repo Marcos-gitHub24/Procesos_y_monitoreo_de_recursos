@@ -1,4 +1,130 @@
-<p>principal works!</p>
-<div>
-    <textarea>{{ram.libre}}</textarea>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="principal.component.css">
+</head>
+
+<div class="boton" *ngIf="render==true">
+    <button style="background-color: #4d7275;width: 150px; font-size: 20px; color:white;" (click)="esconder()">Árbol de procesos</button>
+</div>
+<div class="boton" *ngIf="render==false">
+    <button style="background-color: #4d7275;width: 150px; font-size: 20px; color:white;" (click)="esconder()">Tabla de procesos</button>
+</div>
+
+
+<div class="tabla" style="margin-left: 300px; ">
+    <div class="container" style="margin-left: 25px; margin-top: 0px; ">
+        <div class="card-group mt-3" style="width: 660px; height: 100px;">
+
+            <table class="table table-hover" style="border: solid;width: 478px; align-items: center; background-color:#4d7275; border-color: black; border-radius: 10px; border:solid">
+                <thead>
+                    <tr>
+                        <th scope="col" style="color:white; text-align-last: center; font-size: 25px;">Total</th>
+                        <th scope="col" style="color:white; text-align-last: center; font-size: 25px;">Ejecución</th>
+                        <th scope="col" style="color:white; text-align-last: center; font-size: 25px;">Suspendidos</th>
+                        <th scope="col" style="color:white; text-align-last: center; font-size: 25px;">Detenidos</th>
+                        <th scope="col" style="color:white; text-align-last: center; font-size: 25px;">Zombies</th>
+
+                    </tr>
+                </thead>
+                <thead style="background-color: white;">
+                    <tr>
+                        <th scope="col" style="color:black; text-align-last: center; font-size: 20px;">
+                            {{procesos.total}}</th>
+                        <th scope="col" style="color:black; text-align-last: center; font-size: 20px;">
+                            {{procesos.ejecucion}}</th>
+                        <th scope="col" style="color:black; text-align-last: center; font-size: 20px;">
+                            {{procesos.suspendido}}</th>
+                        <th scope="col" style="color:black; text-align-last: center; font-size: 20px;">
+                            {{procesos.detenido}}</th>
+                        <th scope="col" style="color:black; text-align-last: center; font-size: 20px;">
+                            {{procesos.zombie}}</th>
+
+                    </tr>
+                </thead>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+<div class="tabla_info"*ngIf="render==true">
+    <div class="titulo1">
+    <h1>Procesos del CPU</h1>
+    </div> 
+    <div class="container">
+        <div class="row">
+            <table class="col-xs-7 table-bordered table-striped table-condensed table-fixed" style="border:solid">
+                <thead>
+                    <tr>
+                        <th class="pid">PID</th>
+                        <th class="col">Nombre</th>
+                        <th class="usercol">Usuario</th>
+                        <th class="estado">Estado</th>
+                        <th class="ram">%RAM</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let a of procesos_principal" style="border:solid">
+                        <tr>
+                            <td class="pid">{{a.pid}}</td>
+                            <td class="col">{{a.nombre}}</td>
+                            <td class="user">{{a.usuario}}</td>
+                            <td class="col">{{a.estado}}</td>
+                            <td class="col">{{a.ram}}</td>
+                            <td>
+                                <button (click)="kill(a.pid)" style="width: 70px; height: 20px; background-color: tomato;"> Kill</button>
+                            </td>
+                        </tr>
+                    </ng-container>
+
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+<div *ngIf="render==false">
+    <div class="titulo2">
+        <h1>Árbol de procesos</h1>
+        </div>
+    <div class="container">
+        <div class="row">
+            <table class="col-xs-7 table-bordered table-striped table-condensed table-fixed" style="border:solid">
+                <thead>
+                    <tr>
+                        <th class="pid"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container style="border-radius: 5px;border-color: black;" *ngFor="let a of procesos_principal">
+
+                    <tr>
+                        <mat-accordion>
+                                <mat-expansion-panel hideToggle>
+                                    <mat-expansion-panel-header>
+                                        <mat-panel-description>
+                                            Nombre: {{a.nombre}} ------  PID: {{a.pid}}
+                                        </mat-panel-description>
+                                    </mat-expansion-panel-header>
+                                    <ng-container *ngFor="let b of a.hijos">
+                                        <p style="text-align:center;">Nombre: {{b.nombre}} ------ PID: {{b.pid}}
+                                        </p>
+                                    </ng-container>
+
+                                </mat-expansion-panel>
+                            
+
+                        </mat-accordion>
+                    </tr>
+                </ng-container>
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>

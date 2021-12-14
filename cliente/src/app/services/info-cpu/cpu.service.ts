@@ -24,7 +24,7 @@ export class CpuService {
     this.socket.onmessage = (msg) => {
       this.ram.libre = msg.data
       var datos = String(msg.data)
-      var a = datos.split('\n', 51)
+      var a = datos.split('\n')
       var procesos = []
       
       var contador = 0
@@ -39,7 +39,7 @@ export class CpuService {
       }
       console.log('----------------Porcentaje-----------------------')
       console.log(porcentaje)
-      this.ram.libre = porcentaje
+      this.ram.libre = (porcentaje/8).toPrecision(4)
       localStorage.setItem('porcentaje', String(porcentaje))
       console.log(this.ram.libre)
       porcentaje = 0

@@ -1,0 +1,72 @@
+.tabla{
+    position: absolute;
+    top: 100px;
+}
+
+.titulo1{
+    position: relative;
+    top:30px;
+    left: 500px;
+}
+
+.titulo2{
+    position: relative;
+    top:30px;
+    left: 500px;
+}
+
+
+
+.boton{
+    position: relative;
+    top:110px;
+    left: 100px;
+}
+
+.table-fixed {
+    margin-left: 25rem;
+    margin-top: 5rem;
+}
+
+.table-fixed thead,
+.table-fixed thead>th {
+    background: #4d7275;
+    color: #fff;
+}
+
+
+.table-fixed>thead>tr>th {
+    border: 0 !important;
+}
+
+.table-fixed>tbody>tr>td:last-child {
+    border-right: 0;
+}
+
+.table-fixed tbody td,
+.table-fixed thead>tr>th {
+    float: fixed;
+    font-size: 13px;
+    padding-left: 25px !important;
+}
+
+.table-fixed .col {
+    width: 20%;
+}
+
+.table-fixed .pid {
+    width: 10%;
+}
+.table-fixed .user {
+    width: 5%;
+}
+
+.table-fixed tbody {
+    display: block;
+    height: 300px;
+    overflow-y: auto;
+}
+
+.table-fixed tr {
+    display: block;
+}

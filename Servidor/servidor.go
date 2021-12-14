@@ -52,7 +52,17 @@ func ramFunc(w http.ResponseWriter, r *http.Request) {
 		if errr != nil {
 			log.Fatal(errr)
 		}
-		if err := ws.WriteMessage(1, []byte(out)); err != nil {
+
+		cmd := exec.Command("sh", "-c", "free --mega | head -n 2 | tail -n 1 | awk '{print $6}' ")
+		cache, err := cmd.CombinedOutput()
+
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		resultado := string(out) + string(',') + string(cache)
+
+		if err := ws.WriteMessage(1, []byte(resultado)); err != nil {
 			log.Println(err)
 			return
 		}
@@ -96,7 +106,7 @@ func cpuFunc(w http.ResponseWriter, r *http.Request) {
 	}
 	log.Println("Cliente conectado")
 	for {
-		cmd := exec.Command("sh", "-c", "ps -eo pcpu | sort -k 1 -r | head -50")
+		cmd := exec.Command("sh", "-c", "ps -eo pcpu | sort -k 1 -r | head -70")
 		out, err := cmd.CombinedOutput()
 
 		if err != nil {
@@ -110,11 +120,38 @@ func cpuFunc(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func killFunc(w http.ResponseWriter, r *http.Request) {
+	c, err := upgrader.Upgrade(w, r, nil)
+	if err != nil {
+		log.Print("upgrade:", err)
+		return
+	}
+	defer c.Close()
+
+	mt, message, err := c.ReadMessage()
+	if err != nil {
+		log.Println("read:", err)
+
+	}
+	log.Print(mt)
+
+	cmd := exec.Command("sh", "-c", "kill -9 "+string(message))
+	cmd.CombinedOutput()
+}
+
+func locustFunc(w http.ResponseWriter, r *http.Request) {
+	output := ""
+	fmt.Fprintf(w, output)
+}
+
 func main() {
 	go fmt.Println("levantando servidor...")
 	//http.HandleFunc("/", homepage)
 	http.HandleFunc("/prueba", procesosFunc)
+	http.HandleFunc("/info-ram", ramFunc)
 	http.HandleFunc("/info-cpu", cpuFunc)
+	http.HandleFunc("/locust", locustFunc)
+	http.HandleFunc("/kill", killFunc)
 	go fmt.Println(("Servidor levantado en: 8080"))
 	err := http.ListenAndServe(":8080", nil)
 

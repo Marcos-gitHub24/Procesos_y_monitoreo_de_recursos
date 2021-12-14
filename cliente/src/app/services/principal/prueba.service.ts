@@ -5,12 +5,12 @@ import { ram } from '../../objeto/ram'
   providedIn: 'root'
 })
 export class PruebaService {
-  public socket: WebSocket;
+  public socket: WebSocket = new WebSocket("ws://localhost:8080/prueba");
+  
   public ram:ram = {libre:'', total: ''};
   constructor() {
-    this.socket = new WebSocket("ws://localhost:8080/prueba");
   }
-  getRam(){
+  getInfo(){
 
     this.socket.onopen = () => {
       this.socket.send("hola desde el cliente")
@@ -31,4 +31,7 @@ export class PruebaService {
 
     return this.ram
   }
+
+  
+    
 }

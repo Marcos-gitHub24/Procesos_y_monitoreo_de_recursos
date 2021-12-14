@@ -33,8 +33,8 @@ __used __section("__versions") = {
 	{ 0xc5850110, "printk" },
 	{ 0x5c51c8ee, "proc_create" },
 	{ 0x296695f, "refcount_warn_saturate" },
-	{ 0x6f0c6515, "init_task" },
 	{ 0xa634acda, "seq_printf" },
+	{ 0x6f0c6515, "init_task" },
 	{ 0x4e3773aa, "single_open" },
 	{ 0xbdfb6dbb, "__fentry__" },
 };
@@ -42,4 +42,4 @@ __used __section("__versions") = {
 MODULE_INFO(depends, "");
 
 
-MODULE_INFO(srcversion, "0EF5D43DAC9E5F5A3DDDA4E");
+MODULE_INFO(srcversion, "71F1D3F3B1599BAE9BDFFFE");

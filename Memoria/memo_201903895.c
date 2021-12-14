@@ -17,16 +17,12 @@ static int escribir_archivo(struct seq_file *archivo, void *v)
 {   
     long memoria_total;
     long memoria_libre;
-    long memoria_en_uso;
 
-    seq_printf(archivo, "***********************Modulo de Memoria**********************\n");
     si_meminfo(&inf);
     memoria_total = ((uint64_t)inf.totalram * inf.mem_unit)/(1024*1024);
     memoria_libre = ((uint64_t)inf.freeram * inf.mem_unit)/(1024*1024);
-    memoria_en_uso = memoria_total - memoria_libre;
-    seq_printf(archivo, "Memoria total: %8li\n", memoria_total);
-    seq_printf(archivo, "Memoria libre: %8li\n", memoria_libre);
-    seq_printf(archivo, "Memoria en uso: %8li\n", memoria_en_uso);
+    seq_printf(archivo,"%8li,", memoria_total);
+    seq_printf(archivo, "%8li", memoria_libre);
     return 0;
 }
 

@@ -16,23 +16,23 @@ struct list_head *hijos;
 //Funcion que se ejecutara cada vez que se lea el archivo con el comando CAT
 static int escribir_archivo(struct seq_file *archivo, void *v)
 {   
-    
-    seq_printf(archivo, "***********************Modulo CPU**********************\n");
     for_each_process(proceso){
         long ram_proceso_padre;
         get_task_struct(proceso);
+        int padre = 201903895;
         if (proceso->mm){
-            ram_proceso_padre = get_mm_rss(proceso->mm);
-            seq_printf(archivo, "Proceso %s (PID: %d) RAM: %lu  Estado: %ld\n", proceso->comm, proceso->pid, ram_proceso_padre,proceso->state);
+            ram_proceso_padre = (get_mm_rss(proceso->mm)<< PAGE_SHIFT)/(1024*1024);
+            seq_printf(archivo, "{\"nombre\":\"%s\",\"pid\":\"%d\",\"estado\":\"%ld\",\"ram\":\"%lu\", \"padre\":\"%d\", \"uid\":\"%d\"}\n", proceso->comm, proceso->pid, proceso->state, ram_proceso_padre, padre, proceso->real_cred->uid);
         }else{
-            seq_printf(archivo, "Proceso %s (PID: %d) Estado: %ld\n", proceso->comm, proceso->pid);
+            seq_printf(archivo, "{\"nombre\":\"%s\",\"pid\":\"%d\",\"estado\":\"%ld\", \"padre\":\"%d\", \"uid\":\"%d\"}\n", proceso->comm, proceso->pid, proceso->state, padre, proceso->real_cred->uid);
         }
         
         list_for_each(hijos, &(proceso->children)){
             proceso_hijo = list_entry(hijos, struct task_struct, sibling);
-            seq_printf(archivo, "\tProceso Hijo %s (PID: %d) Estado: %ld\n", proceso_hijo->comm, proceso_hijo->pid, proceso_hijo->state);
+            seq_printf(archivo, "{\"nombre\":\"%s\",\"pid\":\"%d\",\"estado\":\"%ld\",\"padre\":\"%d\", \"uid\":\"%d\"}\n", proceso_hijo->comm, proceso_hijo->pid, proceso_hijo->state, proceso->pid, proceso->real_cred->uid);
         }
     }
+
     return 0;
 }
 
