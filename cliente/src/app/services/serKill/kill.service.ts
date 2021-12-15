@@ -32,6 +32,10 @@ export class KillService {
     this.killSocket.send(proceso)
 
   }
+
+  reanudar(){
+    this.killSocket = new  WebSocket("ws://localhost:8080/kill")
+  }
 }
   
 

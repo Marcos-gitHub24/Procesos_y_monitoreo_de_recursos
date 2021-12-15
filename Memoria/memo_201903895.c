@@ -32,20 +32,12 @@ static int al_abrir(struct inode *inode, struct file *file)
     return single_open(file, escribir_archivo, NULL);
 }
 
-//Si el kernel es 5.6 o mayor se usa la estructura proc_ops
 static struct proc_ops operaciones =
 {
     .proc_open = al_abrir,
     .proc_read = seq_read
 };
 
-/*Si el kernel es menor al 5.6 usan file_operations
-static struct file_operations operaciones =
-{
-    .open = al_abrir,
-    .read = seq_read
-};
-*/
 
 //Funcion a ejecuta al insertar el modulo en el kernel con insmod
 static int _insert(void)

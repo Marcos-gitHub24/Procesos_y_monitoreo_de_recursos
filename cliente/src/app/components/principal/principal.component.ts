@@ -110,6 +110,7 @@ export class PrincipalComponent implements OnInit {
 
   kill(proceso:any){
     this.killSocket.kill(proceso)
+    this.killSocket.reanudar()
   }
  
  
